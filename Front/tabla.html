@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario JSON</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Formulario JSON</h1>
+    <form id="jsonForm">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required>
+      </div>
+      <div class="form-group">
+        <label for="apellido">Apellido</label>
+        <input type="text" class="form-control" id="apellido" name="apellido" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('jsonForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Obtener los valores de los campos
+      var nombre = document.getElementById('nombre').value;
+      var apellido = document.getElementById('apellido').value;
+
+      // Crear un objeto JSON
+      var data = {
+        id: 0,
+        nombre: nombre,
+        apellido: apellido
+      };
+
+      // Enviar el JSON
+      enviarJSON(data);
+    });
+
+    function enviarJSON(data) {
+      // Convertir el objeto JSON a texto JSON
+      var jsonData = JSON.stringify(data);
+
+      // Hacer la solicitud Fetch
+      fetch('https://localhost:7212/api/Socio/crearSocio', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonData
+      })
+      .then(function(response) {
+        // Aquí puedes manejar la respuesta del servidor si lo necesitas
+        console.log(response);
+        alert('Datos enviados correctamente');
+      })
+      .catch(function(error) {
+        // Manejar errores en caso de que la solicitud falle
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</body>
+</html>

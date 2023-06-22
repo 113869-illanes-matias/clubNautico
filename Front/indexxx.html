@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tabla de Nombres</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Tabla de Nombres</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre Completo</th>
+        </tr>
+      </thead>
+      <tbody id="tablaSocios">
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Realizar solicitud Fetch para obtener los datos del endpoint
+    fetch("https://localhost:7212/api/Socio/obtenerSocios")
+      .then(response => response.json())
+      .then(data => {
+        // Generar filas en la tabla
+        var tablaSocios = document.getElementById("tablaSocios");
+        tablaSocios.innerHTML = data.map(socio => `<tr><td>${socio.id}</td><td>${socio.nombreCompleto}</td></tr>`).join('');
+      })
+      .catch(error => console.error(error));
+  </script>
+</body>
+</html>
